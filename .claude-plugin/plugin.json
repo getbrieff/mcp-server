@@ -7,7 +7,7 @@
     "url": "https://getbrieff.com"
   },
   "homepage": "https://getbrieff.com",
-  "repository": "https://github.com/brieff/mcp-server",
+  "repository": "https://github.com/getbrieff/mcp-server",
   "license": "MIT",
   "keywords": ["finance", "sec", "edgar", "stocks", "sp500", "mcp"]
 }
