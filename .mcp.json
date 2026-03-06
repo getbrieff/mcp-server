@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "brieff": {
+      "type": "streamable-http",
+      "url": "https://getbrieff.com/api/mcp",
+      "headers": {
+        "Authorization": "Bearer ${BRIEFF_API_KEY}"
+      }
+    }
+  }
+}
