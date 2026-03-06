@@ -2,10 +2,10 @@
   <img src="assets/logo.png" width="80" height="80" alt="Brieff" />
 </p>
 
-<h1 align="center">Brieff MCP Server</h1>
+<h1 align="center">Brieff</h1>
 
 <p align="center">
-  Access S&P 500 financial data, SEC filings, and AI-generated analysis from Claude.
+  S&P 500 financial data, SEC filings, and AI-generated analysis for Claude.
 </p>
 
 <p align="center">
@@ -18,7 +18,26 @@
 
 ## Quick Setup
 
-### Claude Desktop
+### Option 1: Claude Code Plugin (Recommended)
+
+```bash
+claude plugin install brieff
+```
+
+Then set your API key:
+
+```bash
+export BRIEFF_API_KEY=brff_your_key_here
+```
+
+### Option 2: Claude Code (Manual MCP)
+
+```bash
+claude mcp add brieff --transport streamable-http https://getbrieff.com/api/mcp \
+  -h "Authorization: Bearer YOUR_API_KEY"
+```
+
+### Option 3: Claude Desktop
 
 Add to your `claude_desktop_config.json`:
 
@@ -36,11 +55,10 @@ Add to your `claude_desktop_config.json`:
 }
 ```
 
-### Claude Code
+### Option 4: Local Development
 
 ```bash
-claude mcp add brieff --transport streamable-http https://getbrieff.com/api/mcp \
-  -h "Authorization: Bearer YOUR_API_KEY"
+claude --plugin-dir ./path-to-brieff-plugin
 ```
 
 ## Get an API Key
@@ -49,6 +67,36 @@ claude mcp add brieff --transport streamable-http https://getbrieff.com/api/mcp 
 2. Sign in with your email
 3. Create a new API key
 4. Copy the key (starts with `brff_`) - it won't be shown again
+
+## Available Skills
+
+Skills are guided analysis workflows you can invoke as slash commands. They orchestrate multiple tools to produce comprehensive results.
+
+| Skill | Usage | Description |
+|-------|-------|-------------|
+| `company-analysis` | `/brieff:company-analysis AAPL` | Full company deep-dive: overview, financials, commentary, filings, geographic breakdown |
+| `filing-summary` | `/brieff:filing-summary 0000320193-24-000123` | Summarize signals and risks from a specific SEC filing |
+| `sector-comparison` | `/brieff:sector-comparison AAPL,MSFT,GOOGL` | Side-by-side comparison of multiple companies |
+| `geographic-risk` | `/brieff:geographic-risk AAPL` | Analyze geographic revenue concentration and geopolitical risk |
+| `financial-health` | `/brieff:financial-health AAPL` | Deep-dive into debt, margins, cash flow, and solvency |
+| `portfolio-analysis` | `/brieff:portfolio-analysis AAPL,MSFT,GOOGL,AMZN` | Analyze portfolio diversification, sector balance, and risk |
+| `earnings-alert` | `/brieff:earnings-alert` | Scan recent filings for notable signals and earnings surprises |
+
+## Financial Analyst Agent
+
+The plugin includes a `financial-analyst` agent that Claude automatically delegates to when it detects a financial analysis task. The agent:
+
+- Knows all 9 Brieff tools and when to use each one
+- Searches for companies by name if no ticker is provided
+- Formats financial figures properly ($1.2B, not 1200000000)
+- Presents both strengths and risks objectively
+- Never provides investment advice - data and analysis only
+
+You can also invoke it explicitly:
+
+```
+Use the financial-analyst agent to analyze NVIDIA's latest earnings
+```
 
 ## Available Tools
 
@@ -85,10 +133,12 @@ Once configured, you can ask Claude things like:
 - "What are the key risk factors in Tesla's latest 10-K?"
 - "Which S&P 500 companies have the highest free cash flow?"
 - "Show me NVIDIA's geographic revenue breakdown"
+- "Analyze my portfolio: AAPL, MSFT, GOOGL, AMZN, NVDA"
+- "Any notable signals in recent SEC filings?"
 
 ## How It Works
 
-Brieff's MCP server uses the [Model Context Protocol](https://modelcontextprotocol.io) to give Claude direct access to financial data. Data is sourced from SEC EDGAR filings and Yahoo Finance, covering all S&P 500 companies.
+Brieff uses the [Model Context Protocol](https://modelcontextprotocol.io) to give Claude direct access to financial data. Data is sourced from SEC EDGAR filings and Yahoo Finance, covering all S&P 500 companies.
 
 ```
 Claude <-> MCP Protocol <-> Brieff API <-> SEC EDGAR + Yahoo Finance
