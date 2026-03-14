@@ -24,17 +24,12 @@
 claude plugin install brieff
 ```
 
-Then set your API key:
-
-```bash
-export BRIEFF_API_KEY=brff_your_key_here
-```
+On first use, your browser will open to sign in to your Brieff account and authorize access. No API key needed.
 
 ### Option 2: Claude Code (Manual MCP)
 
 ```bash
-claude mcp add brieff --transport streamable-http https://getbrieff.com/api/mcp \
-  -h "Authorization: Bearer YOUR_API_KEY"
+claude mcp add brieff --transport streamable-http https://getbrieff.com/api/mcp
 ```
 
 ### Option 3: Claude Desktop
@@ -46,27 +41,21 @@ Add to your `claude_desktop_config.json`:
   "mcpServers": {
     "brieff": {
       "type": "streamable-http",
-      "url": "https://getbrieff.com/api/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_API_KEY"
-      }
+      "url": "https://getbrieff.com/api/mcp"
     }
   }
 }
 ```
 
-### Option 4: Local Development
+### Programmatic Access (For Developers)
 
-```bash
-claude --plugin-dir ./path-to-brieff-plugin
-```
-
-## Get an API Key
+For scripts, CI/CD pipelines, or direct API access, use an API key:
 
 1. Go to [getbrieff.com/en/dashboard](https://getbrieff.com/en/dashboard)
-2. Sign in with your email
-3. Create a new API key
-4. Copy the key (starts with `brff_`) - it won't be shown again
+2. Sign in and create a new API key (starts with `brff_`)
+3. Use it with REST API endpoints (`/api/company`, `/api/filings`, etc.)
+
+> **Migration note:** API key authentication for the MCP endpoint has been removed. If you were using an API key with the MCP plugin, reinstall the plugin and sign in via OAuth.
 
 ## Available Skills
 
