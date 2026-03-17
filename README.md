@@ -70,12 +70,14 @@ Skills are guided analysis workflows you can invoke as slash commands. They orch
 | `financial-health` | `/brieff:financial-health AAPL` | Deep-dive into debt, margins, cash flow, and solvency |
 | `portfolio-analysis` | `/brieff:portfolio-analysis AAPL,MSFT,GOOGL,AMZN` | Analyze portfolio diversification, sector balance, and risk |
 | `earnings-alert` | `/brieff:earnings-alert` | Scan recent filings for notable signals and earnings surprises |
+| `market-overview` | `/brieff:market-overview` | Full market snapshot: indices, sectors, factors, volatility, and credit signals |
+| `technical-analysis` | `/brieff:technical-analysis AAPL` | Technical indicators and analyst consensus for a stock |
 
 ## Financial Analyst Agent
 
 The plugin includes a `financial-analyst` agent that Claude automatically delegates to when it detects a financial analysis task. The agent:
 
-- Knows all 9 Brieff tools and when to use each one
+- Knows all 16 Brieff tools and when to use each one
 - Searches for companies by name if no ticker is provided
 - Formats financial figures properly ($1.2B, not 1200000000)
 - Presents both strengths and risks objectively
@@ -89,6 +91,8 @@ Use the financial-analyst agent to analyze NVIDIA's latest earnings
 
 ## Available Tools
 
+### Company Data
+
 | Tool | Input | Description |
 |------|-------|-------------|
 | `get_company` | `ticker` | Company overview: price, market cap, sector, P/E, 52-week range, beta, dividend yield |
@@ -100,6 +104,18 @@ Use the financial-analyst agent to analyze NVIDIA's latest earnings
 | `get_commentary` | `ticker` | AI-generated commentary with scores: valuation, profitability, growth, financial health, dividends |
 | `search_companies` | `query` | Search S&P 500 companies by name or ticker |
 | `get_latest_filings` | `limit?`, `offset?`, `form_types?`, `query?` | Paginated recent SEC filings with optional filtering |
+| `get_technicals` | `ticker` | Technical indicators: MA50, MA200, RSI-14, short interest, volume, 52-week range, beta |
+| `get_analyst_consensus` | `ticker` | Analyst consensus rating, price targets, rating distribution, recent upgrades/downgrades |
+
+### Market Data
+
+| Tool | Input | Description |
+|------|-------|-------------|
+| `get_market_overview` | - | S&P 500, Nasdaq 100, and Dow Jones index prices with daily changes |
+| `get_sector_performance` | - | Performance of all 11 GICS sector ETFs with daily price changes |
+| `get_factor_performance` | - | Factor ETFs: growth, value, momentum, quality, min volatility, high dividend, small cap |
+| `get_volatility` | - | VIX family indicators (VIX, VIX9D, VIX3M) and term structure classification |
+| `get_credit_signals` | - | High yield and investment grade bond ETFs with HYG/SPY divergence signal |
 
 ## Available Prompts
 
@@ -124,6 +140,11 @@ Once configured, you can ask Claude things like:
 - "Show me NVIDIA's geographic revenue breakdown"
 - "Analyze my portfolio: AAPL, MSFT, GOOGL, AMZN, NVDA"
 - "Any notable signals in recent SEC filings?"
+- "How is the market doing today?"
+- "Which sectors are outperforming?"
+- "What does the VIX term structure look like?"
+- "Give me the technical analysis for TSLA"
+- "What's the analyst consensus on META?"
 
 ## How It Works
 
