@@ -29,7 +29,7 @@ On first use, your browser will open to sign in to your Brieff account and autho
 ### Option 2: Claude Code (Manual MCP)
 
 ```bash
-claude mcp add brieff --transport streamable-http https://getbrieff.com/api/mcp
+claude mcp add brieff --transport streamable-http https://getbrieff.com/mcp
 ```
 
 ### Option 3: Claude Desktop
@@ -41,7 +41,7 @@ Add to your `claude_desktop_config.json`:
   "mcpServers": {
     "brieff": {
       "type": "streamable-http",
-      "url": "https://getbrieff.com/api/mcp"
+      "url": "https://getbrieff.com/mcp"
     }
   }
 }
@@ -56,6 +56,18 @@ For scripts, CI/CD pipelines, or direct API access, use an API key:
 3. Use it with REST API endpoints (`/api/company`, `/api/filings`, etc.)
 
 > **Migration note:** API key authentication for the MCP endpoint has been removed. If you were using an API key with the MCP plugin, reinstall the plugin and sign in via OAuth.
+
+## Rate Limits
+
+Brieff uses tiered rate limiting. Limits are enforced per-user after OAuth authentication.
+
+| Tier | Daily Tool Calls | Rate Limit (req/min) | Max API Keys |
+|------|------------------|----------------------|--------------|
+| **Free** | 25 | 20 | 0 |
+| **Pro** | 500 | 120 | 10 |
+| **Enterprise** | Unlimited | 300 | Unlimited |
+
+A pre-authentication IP-based burst limit of 100 req/min applies to all requests regardless of tier.
 
 ## Available Skills
 
@@ -104,7 +116,7 @@ Use the financial-analyst agent to analyze NVIDIA's latest earnings
 | `get_commentary` | `ticker` | AI-generated commentary with scores: valuation, profitability, growth, financial health, dividends |
 | `search_companies` | `query` | Search S&P 500 companies by name or ticker |
 | `get_latest_filings` | `limit?`, `offset?`, `form_types?`, `query?` | Paginated recent SEC filings with optional filtering |
-| `get_technicals` | `ticker` | Technical indicators: MA50, MA200, RSI-14, short interest, volume, 52-week range, beta |
+| `get_technicals` | `ticker` | Technical indicators: MA50, MA200, RSI-14, MACD, Bollinger Bands, EMA-10, ATR-14, short interest, volume, 52-week range, beta |
 | `get_analyst_consensus` | `ticker` | Analyst consensus rating, price targets, rating distribution, recent upgrades/downgrades |
 
 ### Market Data
@@ -128,6 +140,7 @@ Prompts are multi-step analysis workflows that guide Claude through a structured
 | `sector-comparison` | comma-separated tickers | Side-by-side comparison of multiple companies |
 | `geographic-risk-analysis` | `ticker` | Geopolitical risk analysis based on geographic revenue exposure |
 | `financial-health-check` | `ticker` | Deep-dive into debt, margins, and cash flow health |
+| `trading-signal` | `ticker`, `risk_tolerance` | Multi-perspective trading signal (technical, fundamental, sentiment, macro) |
 
 ## Example Usage
 

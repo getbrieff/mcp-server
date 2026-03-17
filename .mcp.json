@@ -2,7 +2,7 @@
   "mcpServers": {
     "brieff": {
       "type": "streamable-http",
-      "url": "https://getbrieff.com/api/mcp"
+      "url": "https://getbrieff.com/mcp"
     }
   }
 }
